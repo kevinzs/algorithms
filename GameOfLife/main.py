@@ -22,6 +22,8 @@ def on_draw():
     window.clear()
     if not pause:
         grid.transition()
+    else:
+        pyglet.text.Label('PAUSE', font_name='Times New Roman', font_size=36, x=10, y=10).draw()
     grid.draw_cells()
 
 
