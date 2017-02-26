@@ -4,6 +4,7 @@ stuff to practice with Python. The implementation of the algorithms may not be t
 
 ### Conway's Game of Life
 ![](https://copy.sh/life/pattern.gif)
+
 Implementation of the cellular automaton created by the British mathematician John Horton Conway.
 More info about the automaton: https://en.wikipedia.org/wiki/Conway's_Game_of_Life
 
