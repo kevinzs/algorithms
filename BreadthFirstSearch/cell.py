@@ -9,6 +9,7 @@ class Cell:
         3 - Visited Cell
         4 - Frontier cell
         5 - Start cell
+        6 - End cell
     """
 
     def __init__(self, x=0, y=0, cellsize=0, type=1):
@@ -27,15 +28,17 @@ class Cell:
 
     def render(self):
         if self.type == 1:
-            pyglet.gl.glColor3f(1, 226 / 255, 160 / 255)
+            pyglet.gl.glColor3f(223/255, 255 / 255, 128 / 255)
         elif self.type == 2:
-            pyglet.gl.glColor3f(128 / 255, 60 / 255, 0)
+            pyglet.gl.glColor3f(230 / 255, 145 / 255, 0)
         elif self.type == 3:
-            pyglet.gl.glColor3f(198 / 255, 198 / 255, 198 / 255)
+            pyglet.gl.glColor3f(128 / 255, 212 / 255, 255 / 255)
         elif self.type == 4:
             pyglet.gl.glColor3f(0, 116 / 255, 191 / 255)
         elif self.type == 5:
-            pyglet.gl.glColor3f(240 / 255, 10 / 210, 10 / 255)
+            pyglet.gl.glColor3f(240 / 255, 10 / 255, 10 / 255)
+        elif self.type == 6:
+            pyglet.gl.glColor3f(0 / 255, 190 / 255, 20 / 255)
 
         pyglet.graphics.draw(4, pyglet.gl.GL_QUADS,
                              ('v2f', [self.x, self.y,

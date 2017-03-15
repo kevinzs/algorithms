@@ -1,6 +1,5 @@
 from BreadthFirstSearch.cell import Cell
 import pyglet
-
 from common.Queue import Queue
 
 
@@ -9,8 +8,11 @@ class Grid:
         self.width = width
         self.height = height
         self.walls = []
+        self.bfs = False
+        self.finish = False
         self.cellSize = cellsize
         self.start = Cell()
+        self.end = Cell()
         self.frontier = Queue()
         self.visited = {}
         self.cells = [[Cell() for i in range(int(self.width / self.cellSize))]
@@ -45,7 +47,7 @@ class Grid:
                 self.cells[i][j].render()
 
     def drawlines(self):
-        pyglet.gl.glColor3f(100 / 255, 100 / 255, 100 / 255)
+        pyglet.gl.glColor3f(200/255, 200 / 255, 200 / 255)
         for i in range(self.cellSize, self.width, self.cellSize):
             pyglet.graphics.draw(2, pyglet.gl.GL_LINES, ("v2f", (0, i, self.width, i)))
             pyglet.graphics.draw(2, pyglet.gl.GL_LINES, ("v2f", (i, 0, i, self.width)))
@@ -54,6 +56,11 @@ class Grid:
         self.start.type = 1
         self.cells[int(x / self.cellSize)][int(y / self.cellSize)].type = 5
         self.start = self.cells[int(x / self.cellSize)][int(y / self.cellSize)]
+
+    def setend(self, x, y):
+        self.end.type = 1
+        self.cells[int(x / self.cellSize)][int(y / self.cellSize)].type = 6
+        self.end = self.cells[int(x / self.cellSize)][int(y / self.cellSize)]
 
     def setwall(self, x, y):
         self.cells[int(x / self.cellSize)][int(y / self.cellSize)].type = 2
@@ -71,17 +78,22 @@ class Grid:
                 self.cells[i][j].type = 1
         self.walls = []
 
-    def breadth_first_search1(self):
-        self.frontier.put(self.start)
-        self.visited[self.start] = True
-
-    def breadth_first_search2(self):
-        if not self.frontier.empty():
-            current = self.frontier.get()
-            if current != self.start:
-                self.setvisited(current)
-            for next in self.neighbors(current):
-                if next not in self.visited:
-                    self.frontier.put(next)
-                    self.visited[next] = True
-                    self.setfrontier(next)
+    # Poner booleano de final para que no continue el bucle
+    def breadth_first_search(self):
+        if not self.bfs:
+            self.frontier.put(self.start)
+            self.visited[self.start] = True
+            self.bfs = True
+        else:
+            if not self.frontier.empty() and not self.finish:
+                current = self.frontier.get()
+                if current != self.end:
+                    if current != self.start:
+                        self.setvisited(current)
+                    for next in self.neighbors(current):
+                        if next == self.end:
+                            self.finish = True
+                        if next not in self.visited:
+                            self.frontier.put(next)
+                            self.visited[next] = True
+                            self.setfrontier(next)
