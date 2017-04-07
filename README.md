@@ -25,3 +25,7 @@ Instructions:
   - Space: do an iteration of BFS.
   - Key D: Clear the grid.
   
+### Future Algorithms
+  - Maze generatos
+  - A-star
+  - Fractal Tree
