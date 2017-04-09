@@ -7,7 +7,6 @@ keys = key.KeyStateHandler()
 window.push_handlers(keys)
 window.set_location(500, 250)
 
-
 counter = .0
 fps = 1 / 2000.0
 start_BFS = False
@@ -18,6 +17,7 @@ grid = Grid(window_width, window_height, 20)
 def update_frames(dt):
     global counter
     counter = (counter + dt) % 2
+
 
 @window.event
 def on_draw():
@@ -45,12 +45,14 @@ def on_mouse_drag(x, y, dx, dy, buttons, modifiers):
     if buttons == mouse.LEFT:
         grid.setwall(x, y)
 
+
 def handle_keyboard():
     if keys[key.D]:
         grid.delete_grid()
     if keys[key.SPACE]:
         global start_BFS
         start_BFS = True
+
 
 pyglet.clock.schedule_interval(update_frames, fps)
 pyglet.app.run()

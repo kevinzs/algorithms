@@ -29,19 +29,19 @@ class Cell:
 
     def render(self):
         if self.type == 1:
-            pyglet.gl.glColor3f(223/255, 255 / 255, 128 / 255)
+            pyglet.gl.glColor3f(226 / 255, 226 / 255, 226 / 255)
         elif self.type == 2:
-            pyglet.gl.glColor3f(230 / 255, 145 / 255, 0)
+            pyglet.gl.glColor3f(51 / 255, 51 / 255, 51 / 255)
         elif self.type == 3:
-            pyglet.gl.glColor3f(128 / 255, 212 / 255, 255 / 255)
+            pyglet.gl.glColor3f(179 / 255, 179 / 255, 179 / 255)
         elif self.type == 4:
-            pyglet.gl.glColor3f(0, 116 / 255, 191 / 255)
+            pyglet.gl.glColor3f(95 / 255, 95 / 255, 95 / 255)
         elif self.type == 5:
             pyglet.gl.glColor3f(240 / 255, 10 / 255, 10 / 255)
         elif self.type == 6:
             pyglet.gl.glColor3f(0 / 255, 190 / 255, 20 / 255)
         elif self.type == 7:
-            pyglet.gl.glColor3f(255 / 255, 255 / 255, 255 / 255)
+            pyglet.gl.glColor3f(153 / 255, 0 / 255, 204 / 255)
 
         pyglet.graphics.draw(4, pyglet.gl.GL_QUADS,
                              ('v2f', [self.x, self.y,

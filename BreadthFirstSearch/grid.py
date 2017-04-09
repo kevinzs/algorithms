@@ -48,7 +48,7 @@ class Grid:
                 self.cells[i][j].render()
 
     def drawlines(self):
-        pyglet.gl.glColor3f(200/255, 200 / 255, 200 / 255)
+        pyglet.gl.glColor3f(200 / 255, 200 / 255, 200 / 255)
         for i in range(self.cellSize, self.width, self.cellSize):
             pyglet.graphics.draw(2, pyglet.gl.GL_LINES, ("v2f", (0, i, self.width, i)))
             pyglet.graphics.draw(2, pyglet.gl.GL_LINES, ("v2f", (i, 0, i, self.width)))
@@ -101,7 +101,8 @@ class Grid:
                             self.came_from[next] = current
                             self.setfrontier(next)
             else:
-                current = self.end
+                self.end.type = 6
+                current = self.came_from[self.end]
                 while current != self.start:
                     current.type = 7
                     current = self.came_from[current]
