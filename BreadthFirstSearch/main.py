@@ -9,7 +9,8 @@ window.set_location(500, 250)
 
 
 counter = .0
-fps = 1 / 30.0
+fps = 1 / 2000.0
+start_BFS = False
 window_width, window_height = window.get_size()
 grid = Grid(window_width, window_height, 20)
 
@@ -24,6 +25,9 @@ def on_draw():
     window.clear()
     grid.drawcells()
     grid.drawlines()
+    global start_BFS
+    if start_BFS:
+        grid.breadth_first_search()
 
 
 @window.event
@@ -45,7 +49,8 @@ def handle_keyboard():
     if keys[key.D]:
         grid.delete_grid()
     if keys[key.SPACE]:
-        grid.breadth_first_search()
+        global start_BFS
+        start_BFS = True
 
 pyglet.clock.schedule_interval(update_frames, fps)
 pyglet.app.run()
