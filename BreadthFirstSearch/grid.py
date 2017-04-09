@@ -15,6 +15,7 @@ class Grid:
         self.end = Cell()
         self.frontier = Queue()
         self.visited = {}
+        self.came_from = {}
         self.cells = [[Cell() for i in range(int(self.width / self.cellSize))]
                       for j in range(int(self.height / self.cellSize) + self.cellSize)]
         for i in range(0, len(self.cells)):
@@ -84,6 +85,7 @@ class Grid:
             self.frontier.put(self.start)
             self.visited[self.start] = True
             self.bfs = True
+            self.came_from[self.start] = None
         else:
             if not self.frontier.empty() and not self.finish:
                 current = self.frontier.get()
@@ -96,4 +98,10 @@ class Grid:
                         if next not in self.visited:
                             self.frontier.put(next)
                             self.visited[next] = True
+                            self.came_from[next] = current
                             self.setfrontier(next)
+            else:
+                current = self.end
+                while current != self.start:
+                    current.type = 7
+                    current = self.came_from[current]

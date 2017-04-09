@@ -10,6 +10,7 @@ class Cell:
         4 - Frontier cell
         5 - Start cell
         6 - End cell
+        7 - Path Cell
     """
 
     def __init__(self, x=0, y=0, cellsize=0, type=1):
@@ -39,6 +40,8 @@ class Cell:
             pyglet.gl.glColor3f(240 / 255, 10 / 255, 10 / 255)
         elif self.type == 6:
             pyglet.gl.glColor3f(0 / 255, 190 / 255, 20 / 255)
+        elif self.type == 7:
+            pyglet.gl.glColor3f(255 / 255, 255 / 255, 255 / 255)
 
         pyglet.graphics.draw(4, pyglet.gl.GL_QUADS,
                              ('v2f', [self.x, self.y,
