@@ -22,7 +22,7 @@ Instructions:
   - Right mouse click: Set the start position.
   - Middle mouse click: Set the end position.
   - Left mouse click: Draw a wall. 
-  - Space: do an iteration of BFS.
+  - Space: start BFS.
   - Key D: Clear the grid.
   
 ### Future Algorithms
