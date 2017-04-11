@@ -6,7 +6,7 @@ class Cell:
     Cell types:
         1 - Wall cell
         2 - Visited cell
-        3 - Backtrack Cell
+        3 - Backtrack Cell (for debugging)
     """
 
     def __init__(self, x=0, y=0, cellsize=0, type=1):

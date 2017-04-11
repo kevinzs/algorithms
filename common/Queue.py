@@ -13,3 +13,6 @@ class Queue:
 
     def get(self):
         return self.elements.popleft()
+
+    def getLast(self):
+        return self.elements.pop()

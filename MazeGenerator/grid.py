@@ -10,7 +10,7 @@ class Grid:
         self.start = False
         self.cellSize = cellsize
         self.visited = {}
-        self.backtracked = {}
+        self.backtrack = Queue()
         self.track = Queue()
         self.frontier = Queue()
         self.cells = [[Cell() for i in range(int(self.width / self.cellSize))]
@@ -50,23 +50,36 @@ class Grid:
             if not self.track.empty():
                 current = self.track.get()
                 current.type = 2
+                self.visited[current] = True
                 result = self.neighbors(current)
                 if len(result) > 0:
-                    loop = True
-                    while loop:
+                    for next in result:
+                        aux = False
                         next = result[randint(0, len(result) - 1)]
                         if next not in self.visited:
                             next.type = 2
-                            self.visited[next] = True
                             if abs(current.x - next.x) == 0:
                                 if current.y - next.y < 0:
-                                    self.cells[int(current.x / self.cellSize)][int(current.y / self.cellSize) + 1].type = 2
+                                    self.cells[int(current.x / self.cellSize)][
+                                        int(current.y / self.cellSize) + 1].type = 2
                                 else:
-                                    self.cells[int(current.x / self.cellSize)][int(current.y / self.cellSize) - 1].type = 2
+                                    self.cells[int(current.x / self.cellSize)][
+                                        int(current.y / self.cellSize) - 1].type = 2
                             else:
                                 if current.x - next.x < 0:
-                                    self.cells[int(current.x / self.cellSize) + 1][int(current.y / self.cellSize)].type = 2
+                                    self.cells[int(current.x / self.cellSize) + 1][
+                                        int(current.y / self.cellSize)].type = 2
                                 else:
-                                    self.cells[int(current.x / self.cellSize) - 1][int(current.y / self.cellSize)].type = 2
+                                    self.cells[int(current.x / self.cellSize) - 1][
+                                        int(current.y / self.cellSize)].type = 2
                             self.track.put(next)
-                            loop = False
+                            self.backtrack.put(next)
+                            aux = True
+                            break
+                    if not aux and not self.backtrack.empty():
+                        self.track.put(self.backtrack.getLast())
+
+    """
+        Sometimes when there is only one 'valid' neighbor the algorithm didn't choose it.
+        I think that the reason is that self.visited treat cells like X,Y and Y,X as the same.
+    """
