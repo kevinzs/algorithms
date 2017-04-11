@@ -25,7 +25,12 @@ Instructions:
   - Space: start BFS.
   - Key D: Clear the grid.
   
+### Maze generator
+![](http://i.imgur.com/QtQEOhH.gif)
+
+Implementation of the maze generator algorithm with the BFS version.
+More info: https://en.wikipedia.org/wiki/Maze_generation_algorithm
+
 ### Future Algorithms
-  - Maze generatos
   - A-star
   - Fractal Tree
