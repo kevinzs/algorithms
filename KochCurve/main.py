@@ -8,7 +8,7 @@ window = pyglet.window.Window(width, height)
 window.set_location(250, 250)
 
 counter = .0
-fps = 1 / 20.0
+fps = 1 / 1.0
 
 padding = 100
 lineLength = width - padding * 2
@@ -63,6 +63,7 @@ def on_draw():
     global lines
     for line in lines:
         pyglet.graphics.draw(2, pyglet.gl.GL_LINES, ("v2f", (line[0], line[1], line[2], line[3])))
+    lines = kochCurve(lines)
 
 
 @window.event
