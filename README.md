@@ -31,6 +31,12 @@ Instructions:
 Implementation of the maze generator algorithm with the BFS version.
 More info: https://en.wikipedia.org/wiki/Maze_generation_algorithm
 
+### Koch Curve
+![](https://i.stack.imgur.com/V8GXd.gif)
+
+Implementation of the Koch Curve.
+More info: https://en.wikipedia.org/wiki/Koch_snowflake
+
 ### Future Algorithms
   - A-star
   - Fractal Tree
