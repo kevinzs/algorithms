@@ -1,4 +1,4 @@
-import pyglet
+import pygame
 
 
 class Cell:
@@ -27,29 +27,21 @@ class Cell:
     def type(self, typ):
         self._type = typ
 
-    def render(self):
+    def render(self, screen):
         if self.type == 1:
-            pyglet.gl.glColor3f(226 / 255, 226 / 255, 226 / 255)
+            pygame.draw.rect(screen, (226, 226, 226), (self.x, self.y, self.cellsize, self.cellsize))
         elif self.type == 2:
-            pyglet.gl.glColor3f(51 / 255, 51 / 255, 51 / 255)
+            pygame.draw.rect(screen, (51, 51, 51), (self.x, self.y, self.cellsize, self.cellsize))
         elif self.type == 3:
-            pyglet.gl.glColor3f(179 / 255, 179 / 255, 179 / 255)
+            pygame.draw.rect(screen, (179, 179, 179), (self.x, self.y, self.cellsize, self.cellsize))
         elif self.type == 4:
-            pyglet.gl.glColor3f(95 / 255, 95 / 255, 95 / 255)
+            pygame.draw.rect(screen, (95, 95, 95), (self.x, self.y, self.cellsize, self.cellsize))
         elif self.type == 5:
-            pyglet.gl.glColor3f(240 / 255, 10 / 255, 10 / 255)
+            pygame.draw.rect(screen, (240, 10, 10), (self.x, self.y, self.cellsize, self.cellsize))
         elif self.type == 6:
-            pyglet.gl.glColor3f(0 / 255, 190 / 255, 20 / 255)
+            pygame.draw.rect(screen, (0, 190, 20), (self.x, self.y, self.cellsize, self.cellsize))
         elif self.type == 7:
-            pyglet.gl.glColor3f(153 / 255, 0 / 255, 204 / 255)
-
-        pyglet.graphics.draw(4, pyglet.gl.GL_QUADS,
-                             ('v2f', [self.x, self.y,
-                                      self.x + self.cellsize, self.y,
-                                      self.x + self.cellsize,
-                                      self.y + self.cellsize,
-                                      self.x, self.y + self.cellsize])
-                             )
+            pygame.draw.rect(screen, (153, 0, 204), (self.x, self.y, self.cellsize, self.cellsize))
 
     def set_type(self, _type):
         self.type = _type

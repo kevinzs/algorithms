@@ -1,58 +1,58 @@
-import pyglet
-from pyglet.window import key, mouse
+import sys, pygame
+from pygame.locals import *
 from BreadthFirstSearch.grid import Grid
 
-window = pyglet.window.Window(640, 480)
-keys = key.KeyStateHandler()
-window.push_handlers(keys)
-window.set_location(500, 250)
+WIDTH = 640
+HEIGHT = 480
 
-counter = .0
-fps = 1 / 2000.0
 start_BFS = False
-window_width, window_height = window.get_size()
-grid = Grid(window_width, window_height, 20)
+grid = Grid(WIDTH, HEIGHT, 20)
 
 
-def update_frames(dt):
-    global counter
-    counter = (counter + dt) % 2
+def main():
+    screen = pygame.display.set_mode((WIDTH, HEIGHT))
+    pygame.display.set_caption("Game Of Life")
+
+    clock = pygame.time.Clock()
+    while True:
+        clock.tick(100)
+        screen.fill((0, 0, 0))
+        events()
+        update(screen)
+        pygame.display.update()
+        pygame.display.flip()
+    return 0
 
 
-@window.event
-def on_draw():
-    handle_keyboard()
-    window.clear()
-    grid.drawcells()
-    grid.drawlines()
+def update(screen):
+    grid.drawcells(screen)
+    grid.drawlines(screen)
     global start_BFS
     if start_BFS:
         grid.breadth_first_search()
 
 
-@window.event
-def on_mouse_press(x, y, button, modifiers):
-    if button == mouse.LEFT:
-        grid.setwall(x, y)
-    elif button == mouse.RIGHT:
-        grid.setstart(x, y)
-    elif button == mouse.MIDDLE:
-        grid.setend(x, y)
+def events():
+    for event in pygame.event.get():
+        if event.type == QUIT:
+            sys.exit(0)
+        if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_SPACE:
+                global start_BFS
+                start_BFS = True
+            if event.key == pygame.K_d:
+                grid.delete_grid()
 
+    if pygame.mouse.get_pressed() == (1, 0, 0):
+        pos = pygame.mouse.get_pos()
+        grid.setwall(pos[0], pos[1])
+    if pygame.mouse.get_pressed() == (0, 1, 0):
+        pos = pygame.mouse.get_pos()
+        grid.setend(pos[0], pos[1])
+    if pygame.mouse.get_pressed() == (0, 0, 1):
+        pos = pygame.mouse.get_pos()
+        grid.setstart(pos[0], pos[1])
 
-@window.event
-def on_mouse_drag(x, y, dx, dy, buttons, modifiers):
-    if buttons == mouse.LEFT:
-        grid.setwall(x, y)
-
-
-def handle_keyboard():
-    if keys[key.D]:
-        grid.delete_grid()
-    if keys[key.SPACE]:
-        global start_BFS
-        start_BFS = True
-
-
-pyglet.clock.schedule_interval(update_frames, fps)
-pyglet.app.run()
+if __name__ == '__main__':
+    pygame.init()
+    main()

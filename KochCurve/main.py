@@ -1,18 +1,13 @@
 import math
-import pyglet
-from pyglet.window import key
+import sys, pygame
+from pygame.locals import *
 
-width = 1280
-height = 480
-window = pyglet.window.Window(width, height)
-window.set_location(250, 250)
-
-counter = .0
-fps = 1 / 1.0
+WIDTH = 1280
+HEIGHT = 480
 
 padding = 100
-lineLength = width - padding * 2
-lines = [[padding, height / 5, width - padding, height / 5, 0]]
+lineLength = WIDTH - padding * 2
+lines = [[padding, HEIGHT / 5, WIDTH - padding, HEIGHT / 5, 0]]
 
 
 def update_frames(dt):
@@ -56,22 +51,39 @@ def kochCurve(lines):
     return nextLines
 
 
-@window.event
-def on_draw():
-    window.clear()
-    pyglet.gl.glColor3f(255 / 255, 255 / 255, 255 / 255)
+def main():
+    screen = pygame.display.set_mode((WIDTH, HEIGHT))
+    pygame.display.set_caption("Koch Curve")
+
+    clock = pygame.time.Clock()
+    while True:
+        clock.tick(30)
+        screen.fill((0, 0, 0))
+        events()
+        update(screen)
+        pygame.display.update()
+    return 0
+
+
+def update(screen):
     global lines
     for line in lines:
-        pyglet.graphics.draw(2, pyglet.gl.GL_LINES, ("v2f", (line[0], line[1], line[2], line[3])))
-    lines = kochCurve(lines)
+        pygame.draw.line(screen, (255, 255, 255), (line[0], line[1]), (line[2], line[3]))
 
 
-@window.event
-def on_key_press(symbol, modifiers):
-    if symbol == key.SPACE:
-        global lines
-        lines = kochCurve(lines)
+def events():
+    for event in pygame.event.get():
+        if event.type == QUIT:
+            sys.exit(0)
+        if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_SPACE:
+                global lines
+                lines = kochCurve(lines)
+
+if __name__ == '__main__':
+    pygame.init()
+    font = pygame.font.SysFont("monospace", 50)
+    main()
 
 
-pyglet.clock.schedule_interval(update_frames, fps)
-pyglet.app.run()
+

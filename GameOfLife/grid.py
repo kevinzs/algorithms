@@ -1,4 +1,4 @@
-import pyglet
+import pygame
 from GameOfLife.cell import Cell
 
 
@@ -12,22 +12,16 @@ class Grid(object):
         for i in range(0, len(self._cells)):
             for j in range(0, len(self._cells[0])):
                 self._cells[i][j] = Cell(i * self._cellSize, j * self._cellSize)
-        self.draw_cells()
 
-    def draw_cells(self):
+    def draw_cells(self, screen):
         for i in range(len(self._cells)):
             for j in range(len(self._cells[0])):
                 if self._cells[i][j].dead:
-                    pyglet.gl.glColor3f(0.1, 0.1, 0.1)
+                    pygame.draw.rect(screen, (0, 0, 0), (self._cells[i][j].x, self._cells[i][j].y,
+                                                         self._cellSize, self._cellSize))
                 else:
-                    pyglet.gl.glColor3f(1, 1, 1)
-                    pyglet.graphics.draw(4, pyglet.gl.GL_QUADS,
-                                         ('v2f', [self._cells[i][j].x, self._cells[i][j].y,
-                                                  self._cells[i][j].x + self._cellSize, self._cells[i][j].y,
-                                                  self._cells[i][j].x + self._cellSize,
-                                                  self._cells[i][j].y + self._cellSize,
-                                                  self._cells[i][j].x, self._cells[i][j].y + self._cellSize])
-                                         )
+                    pygame.draw.rect(screen, (255, 255, 255), (self._cells[i][j].x, self._cells[i][j].y,
+                                                               self._cellSize, self._cellSize))
 
     def setalivecell(self, x, y):
         try:

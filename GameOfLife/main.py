@@ -1,48 +1,55 @@
-import pyglet
-from pyglet.window import key
+import sys, pygame
+from pygame.locals import *
 from GameOfLife.grid import Grid
 
-window = pyglet.window.Window(640, 480)
-window.set_location(500, 250)
+WIDTH = 640
+HEIGHT = 480
 
-counter = .0
-fps = 1 / 5.0
-window_width, window_height = window.get_size()
-grid = Grid(window_width, window_height)
+grid = Grid(WIDTH, HEIGHT)
+
 pause = False
 
 
-def update_frames(dt):
-    global counter
-    counter = (counter + dt) % 2
+def main():
+    screen = pygame.display.set_mode((WIDTH, HEIGHT))
+    pygame.display.set_caption("Game Of Life")
+
+    clock = pygame.time.Clock()
+    while True:
+        if pause:
+            clock.tick(60)
+        else:
+            clock.tick(15)
+        screen.fill((0, 0, 0))
+        events()
+        update(screen)
+        pygame.display.update()
+        pygame.display.flip()
+    return 0
 
 
-@window.event
-def on_draw():
-    window.clear()
-    if not pause:
-        grid.transition()
+def update(screen):
+    grid.draw_cells(screen)
+    if pause:
+        label = font.render("PAUSE", 1, (255, 255, 255))
+        screen.blit(label, (WIDTH/2.75, HEIGHT/2.5))
     else:
-        pyglet.text.Label('PAUSE', font_name='Times New Roman', font_size=36, x=10, y=10).draw()
-    grid.draw_cells()
+        grid.transition()
 
 
-@window.event
-def on_mouse_press(x, y, button, modifiers):
-    grid.setalivecell(x, y)
+def events():
+    for event in pygame.event.get():
+        if event.type == QUIT:
+            sys.exit(0)
+        if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_SPACE:
+                global pause
+                pause = not pause
+    if pygame.mouse.get_pressed() == (1, 0, 0):
+        pos = pygame.mouse.get_pos()
+        grid.setalivecell(pos[0], pos[1])
 
-
-@window.event
-def on_mouse_drag(x, y, dx, dy, buttons, modifiers):
-    grid.setalivecell(x, y)
-
-
-@window.event
-def on_key_press(symbol, modifiers):
-    if symbol == key.SPACE:
-        global pause
-        pause = not pause
-
-
-pyglet.clock.schedule_interval(update_frames, fps)
-pyglet.app.run()
+if __name__ == '__main__':
+    pygame.init()
+    font = pygame.font.SysFont("monospace", 50)
+    main()

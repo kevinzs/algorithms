@@ -1,6 +1,6 @@
-from BreadthFirstSearch.cell import Cell
-import pyglet
+import pygame
 from common.Queue import Queue
+from BreadthFirstSearch.cell import Cell
 
 
 class Grid:
@@ -42,16 +42,15 @@ class Grid:
         results = filter(self.passable, results)
         return results
 
-    def drawcells(self):
+    def drawcells(self, screen):
         for i in range(0, len(self.cells)):
             for j in range(0, len(self.cells[0])):
-                self.cells[i][j].render()
+                self.cells[i][j].render(screen)
 
-    def drawlines(self):
-        pyglet.gl.glColor3f(200 / 255, 200 / 255, 200 / 255)
+    def drawlines(self, screen):
         for i in range(self.cellSize, self.width, self.cellSize):
-            pyglet.graphics.draw(2, pyglet.gl.GL_LINES, ("v2f", (0, i, self.width, i)))
-            pyglet.graphics.draw(2, pyglet.gl.GL_LINES, ("v2f", (i, 0, i, self.width)))
+            pygame.draw.line(screen, (200, 200, 200), (0, i), (self.width, i))
+            pygame.draw.line(screen, (200, 200, 200), (i, 0), (i, self.width))
 
     def setstart(self, x, y):
         self.start.type = 1
