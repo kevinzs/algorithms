@@ -42,6 +42,7 @@ def events():
                 start_BFS = True
             if event.key == pygame.K_d:
                 grid.delete_grid()
+                start_BFS = False
 
     if pygame.mouse.get_pressed() == (1, 0, 0):
         pos = pygame.mouse.get_pos()

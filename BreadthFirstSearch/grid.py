@@ -10,6 +10,7 @@ class Grid:
         self.walls = []
         self.bfs = False
         self.finish = False
+        self.finish_bfs = False
         self.cellSize = cellsize
         self.start = Cell()
         self.end = Cell()
@@ -77,6 +78,14 @@ class Grid:
             for j in range(0, len(self.cells[0])):
                 self.cells[i][j].type = 1
         self.walls = []
+        self.start = Cell()
+        self.end = Cell()
+        self.frontier = Queue()
+        self.visited = {}
+        self.came_from = {}
+        self.bfs = False
+        self.finish = False
+        self.finish_bfs = False
 
     # Poner booleano de final para que no continue el bucle
     def breadth_first_search(self):
@@ -99,9 +108,10 @@ class Grid:
                             self.visited[next] = True
                             self.came_from[next] = current
                             self.setfrontier(next)
-            else:
+            elif not self.finish_bfs:
                 self.end.type = 6
                 current = self.came_from[self.end]
                 while current != self.start:
                     current.type = 7
                     current = self.came_from[current]
+                self.finish_bfs = True
