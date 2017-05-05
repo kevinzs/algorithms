@@ -37,10 +37,10 @@ class Grid:
         results = list(filter(self.in_bounds, results))
         return results
 
-    def drawcells(self):
+    def drawcells(self, screen):
         for i in range(0, len(self.cells)):
             for j in range(0, len(self.cells[0])):
-                self.cells[i][j].render()
+                self.cells[i][j].render(screen)
 
     def maze_generator(self):
         if not self.start:

@@ -1,33 +1,42 @@
-import pyglet
+import sys, pygame
+from pygame.locals import *
 from MazeGenerator.grid import Grid
-from pyglet.window import mouse
 
-window = pyglet.window.Window(640, 480)
-window.set_location(500, 250)
+WIDTH = 640
+HEIGHT = 480
 
-counter = .0
-fps = 1 / 200.0
-start_BFS = False
-window_width, window_height = window.get_size()
-grid = Grid(window_width, window_height, 15)
+grid = Grid(WIDTH, HEIGHT, 15)
 
 
-def update_frames(dt):
-    global counter
-    counter = (counter + dt) % 2
+def main():
+    screen = pygame.display.set_mode((WIDTH, HEIGHT))
+    pygame.display.set_caption("Maze Generator")
+
+    clock = pygame.time.Clock()
+    while True:
+        clock.tick(30)
+        screen.fill((0, 0, 0))
+        events()
+        update(screen)
+        pygame.display.update()
+        pygame.display.flip()
+    return 0
 
 
-@window.event
-def on_draw():
-    window.clear()
-    grid.drawcells()
+def update(screen):
+    grid.drawcells(screen)
     grid.maze_generator()
 
-@window.event
-def on_mouse_press(x, y, button, modifiers):
-    if button == mouse.LEFT:
-        grid.maze_generator()
 
+def events():
+    for event in pygame.event.get():
+        if event.type == QUIT:
+            sys.exit(0)
+        if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_SPACE:
+                grid.maze_generator()
 
-pyglet.clock.schedule_interval(update_frames, fps)
-pyglet.app.run()
+if __name__ == '__main__':
+    pygame.init()
+    main()
+
