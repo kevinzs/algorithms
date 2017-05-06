@@ -11,7 +11,7 @@ grid = Grid(WIDTH, HEIGHT, 20)
 
 def main():
     screen = pygame.display.set_mode((WIDTH, HEIGHT))
-    pygame.display.set_caption("Game Of Life")
+    pygame.display.set_caption("Breadth First Search")
 
     clock = pygame.time.Clock()
     while True:
